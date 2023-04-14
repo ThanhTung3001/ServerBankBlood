@@ -32,7 +32,7 @@ namespace Identity
             services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("IdentityConnection"),
-                    b => b.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName)));
+                    b => b.MigrationsAssembly("WebApi")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders()
                 .AddTokenProvider("MyApp", typeof(DataProtectorTokenProvider<ApplicationUser>));

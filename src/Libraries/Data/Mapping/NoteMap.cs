@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Models.DbEntities;
+using Models.DbEntities.Registration;
 
 namespace Data.Mapping
 {
@@ -18,4 +19,6 @@ namespace Data.Mapping
             base.Configure(builder);
         }
     }
+
+  
 }

@@ -12,10 +12,10 @@ using Exception = System.Exception;
 
 namespace WebApi.Controllers;
 
-// [Authorize]
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class CrudControllerBase<TEntity,TDTO>:ControllerBase where TEntity:BaseEntity  where TDTO:class
+public class CrudControllerBase<TEntity>:ControllerBase where TEntity:BaseEntity 
 {
     public CrudControllerBase(IGenericRepository<TEntity> genericRepository, IMapper mapper)
     {
@@ -31,10 +31,9 @@ public class CrudControllerBase<TEntity,TDTO>:ControllerBase where TEntity:BaseE
         try
         {
             var dataPaging = await _GenericRepository.PaginationList(listQuery);
-            var dataMapper = _mapper.Map<List<TDTO>>(dataPaging.Data);
+           
             
-            return Ok(new PaginationListResponse<List<TDTO>>(dataMapper,dataPaging.PageNumber,
-                dataPaging.PageSize,dataPaging.TotalPages,dataPaging.TotalRecords));
+            return Ok(dataPaging);
         }
         catch (Exception e)
         {

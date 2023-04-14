@@ -30,7 +30,7 @@ namespace Core
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("WebApi"));
             });
             services.AddTransient<IDbContext, ApplicationDbContext>();
         }
