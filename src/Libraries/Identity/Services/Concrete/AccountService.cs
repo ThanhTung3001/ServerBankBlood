@@ -1,6 +1,7 @@
 ﻿using Core.Exceptions;
 using Core.Helpers;
 using Core.Interfaces;
+using Data.Repos;
 using Identity.Models;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Models.DbEntities.User;
 using Models.DTOs.Account;
 using Models.DTOs.Email;
 using Models.Enums;
@@ -32,10 +34,13 @@ namespace Identity.Services.Concrete
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JWTSettings _jwtSettings;
         private readonly IEmailService _emailService;
+
+        private readonly IGenericRepository<UserInfo> _repository;
         public AccountService(UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             IOptions<JWTSettings> jwtSettings,
             SignInManager<ApplicationUser> signInManager,
+            IGenericRepository<UserInfo> repository,
             IEmailService emailService)
         {
             _userManager = userManager;
@@ -43,6 +48,7 @@ namespace Identity.Services.Concrete
             _signInManager = signInManager;
             _jwtSettings = jwtSettings.Value;
             _emailService = emailService;
+            _repository = repository;
         }
         public async Task<BaseResponse<AuthenticationResponse>> AuthenticateAsync(AuthenticationRequest request)
         {
@@ -165,18 +171,31 @@ namespace Identity.Services.Concrete
             findUser = await _userManager.FindByEmailAsync(request.Email);
             if (findUser != null)
             {
-                throw new ApiException($"Email {request.Email } is already registered.") { StatusCode = (int)HttpStatusCode.BadRequest };
+                throw new ApiException($"Email {request.Email} is already registered.") { StatusCode = (int)HttpStatusCode.BadRequest };
             }
+
+
             ApplicationUser newUser = new ApplicationUser
             {
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                UserName = request.UserName
+                UserName = request.UserName,
+
             };
+
+
             var result = await _userManager.CreateAsync(newUser, request.Password);
             if (result.Succeeded)
             {
+                var userInfo = new UserInfo()
+                {
+                    AppUserId = newUser.Id,
+                    FullName = newUser.FirstName,
+                    Avatar = $"https://ui-avatars.com/api/?name={newUser.UserName}"
+                };
+                var userRepons = _repository.Insert(userInfo);
+
                 await _userManager.AddToRoleAsync(newUser, Roles.Basic.ToString());
                 var verificationUri = await SendVerificationEmail(newUser, uri);
 
