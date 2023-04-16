@@ -1,4 +1,5 @@
-﻿using Data.Mongo.Collections;
+﻿using System.Collections.Generic;
+using Data.Mongo.Collections;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,9 @@ namespace WebApi.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly ILoginLogService _loginLogService;
-        
+
+
+
         public AccountController(IAccountService accountService, ILoginLogService loginLogService)
         {
             _accountService = accountService;
@@ -111,5 +114,50 @@ namespace WebApi.Controllers
                 });
             }
         }
+
+        [HttpPatch("update-roles")]
+        public async Task<IActionResult> UpdateRoleForUser([FromBody] UpdateRole model)
+        {
+            try
+            {
+                await _accountService.AddRoleForUser(model.roles, model.UserName);
+                return Ok(new
+                {
+                    message = "Update Role Success",
+                    code = 200
+
+                });
+            }
+            catch (System.Exception)
+            {
+
+                return BadRequest(new   {
+                    message = "Update Role Success",
+                    code = 200
+
+                });
+            }
+        }
+        [HttpDelete("delete-users/{username}")]
+        public async Task<IActionResult> DeleteUser(string username){
+            try
+            {
+                await _accountService.RemoveUser(username);
+                return Ok(new {
+                    message="Delete user sucess",
+                    code = 200
+                });
+            }
+            catch (System.Exception)
+            {
+                return BadRequest(
+                    new {
+                        messsage="Delete User failt",
+                        code=400
+                    }
+                );
+                throw;
+            }
+        }    
     }
 }
