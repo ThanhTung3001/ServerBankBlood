@@ -53,9 +53,9 @@ namespace Data.Repos
                 .Take(query.PageSize)
                 .ToListAsync();
             var totalRecords = await _context.Set<T>().CountAsync();
-            var totalPages = totalRecords / query.PageNumber;
+            var totalPages = totalRecords / query.PageSize;
 
-            return new PaginationListResponse<List<T>>(pagedData,query.PageNumber,query.PageSize,totalRecords,totalPages);
+            return new PaginationListResponse<List<T>>(pagedData,query.PageNumber,query.PageSize,totalPages,totalRecords);
         }
 
         public T Find(Expression<Func<T, bool>> match)

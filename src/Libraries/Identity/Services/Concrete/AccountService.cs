@@ -223,14 +223,34 @@ namespace Identity.Services.Concrete
         public async Task<List<ApplicationUser>> GetUsers()
         {
             //return await _userManager.Users.ToListAsync();
+            var users = await _userManager.Users.ToListAsync();
 
-            return await _userManager.Users.Include(u => u.UserRoles)
-            .ThenInclude(ur => ur.Role).ToListAsync(); //lazzyloading
+            
+            foreach (var user in users)
+            {
+                var usersWithRoles = new List<ApplicationUserRole>();
+                var roles = await _userManager.GetRolesAsync(user);
+                foreach (var role in roles)
+                {
+                    usersWithRoles.Add(new ApplicationUserRole()
+                    {
+                        Role =new ApplicationRole()
+                        {
+                            Name = role
+                        }
+                    });
+                }
+
+                user.UserRoles = usersWithRoles;
+            }
+
+            return users;
+            //lazzyloading  
         }
 
         public bool ExistUserByEmail(string email)
         {
-            var user =  _userManager.Users.FirstOrDefault(e => e.Email == email);
+            var user = _userManager.Users.FirstOrDefault(e => e.Email == email);
             return user != null;
         }
 
@@ -264,7 +284,7 @@ namespace Identity.Services.Concrete
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+                expires: DateTime.UtcNow.AddDays(_jwtSettings.DurationInMinutes),
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }
@@ -301,13 +321,36 @@ namespace Identity.Services.Concrete
 
             await _emailService.SendAsync(new EmailRequest()
             {
-                From = "sinantok@outlook.com",
+                From = "tungle3001.itfreelancer@gmail.com",
                 To = newUser.Email,
                 Body = $"Please confirm your account by visiting this URL {verificationUri}",
                 Subject = "Confirm Registration"
             });
 
             return verificationUri;
+        }
+
+        public async Task AddRoleForUser(List<string> roles, string username)
+        {
+
+            try
+            {
+                var user = await _userManager.FindByNameAsync(username);
+                await _userManager.RemoveFromRolesAsync(user, (await _userManager.GetRolesAsync(user)).ToArray());
+                await _userManager.AddToRolesAsync(user, roles);
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public async Task RemoveUser(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            await _userManager.DeleteAsync(user);
         }
     }
 }

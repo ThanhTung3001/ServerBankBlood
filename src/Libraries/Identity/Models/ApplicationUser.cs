@@ -14,10 +14,8 @@ namespace Identity.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public ICollection<ApplicationUserRole> UserRoles { get; set; }
-        
+        public List<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
         public Hospital Hospital { get; set; }
-        
         public UserInfo UserInfo { get; set; }
         
    

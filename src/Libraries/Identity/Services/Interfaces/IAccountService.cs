@@ -17,6 +17,11 @@ namespace Identity.Services.Interfaces
         Task<BaseResponse<string>> LogoutAsync(string userEmail);
         Task<List<ApplicationUser>> GetUsers();
 
+        Task AddRoleForUser(List<string> roles,string username);
+
         bool ExistUserByEmail(string email);
+
+
+        Task RemoveUser(string username);
     }
 }
