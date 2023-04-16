@@ -33,6 +33,7 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMongo(Configuration);
             services.AddLogging(o => o.AddSerilog());
             services.AddIdentity(Configuration);
@@ -47,6 +48,8 @@ namespace WebApi
             services.AddCustomSwagger(Configuration);
 
             services.AddControllers();
+
+         
             //.AddNewtonsoftJson(options =>
             //options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             //);
@@ -93,6 +96,12 @@ namespace WebApi
             app.UseGraphiQl();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials()
+            );
 
             //error middleware
             app.UseErrorHandlingMiddleware();

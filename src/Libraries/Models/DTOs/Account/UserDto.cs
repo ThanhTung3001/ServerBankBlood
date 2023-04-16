@@ -1,13 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Models.DTOs.Account
 {
     public class UserDto
     {
-        public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public List<string> Roles { get; set; }
+        public int Id {get;set;}
+        public string userName { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string email { get; set; }
+        public List<string> roles { get; set; }
+
+        public string phoneNumber{get; set;}
+
+        public string avatar {get;set;}
+
+        public DateTime createDate {get;set;}
     }
 }

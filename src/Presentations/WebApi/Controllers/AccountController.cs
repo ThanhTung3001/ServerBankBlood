@@ -7,6 +7,8 @@ using Services.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Data.Repos;
+using Identity.Models;
 
 namespace WebApi.Controllers
 {
@@ -16,6 +18,7 @@ namespace WebApi.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly ILoginLogService _loginLogService;
+        
         public AccountController(IAccountService accountService, ILoginLogService loginLogService)
         {
             _accountService = accountService;
@@ -85,6 +88,28 @@ namespace WebApi.Controllers
                 return Request.Headers["X-Forwarded-For"];
             else
                 return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+        }
+
+        [HttpGet("check-email")]
+        public IActionResult CheckEmail([FromQuery] string email)
+        {
+            var result = _accountService.ExistUserByEmail(email);
+            if (!result)
+            {
+                return Ok(new
+                {
+                    message = "Email not exist",
+                    code = 200
+                });
+            }
+            else
+            {
+                return BadRequest(new
+                {
+                    message = "Email is exist",
+                    code = 300
+                });
+            }
         }
     }
 }

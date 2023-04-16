@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Identity.Models;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -46,14 +47,18 @@ namespace WebApi.Controllers
 
             var result = userList.Select(x => new UserDto
             {
-                Email = x.Email,
-                UserName = x.UserName,
-                FirstName = x.FirstName,
-                LastName = x.LastName,
-                Roles = x.UserRoles.ToList().Select(y => y.Role.Name.ToString()).ToList()
+                Id = x.Id,
+                phoneNumber = x.PhoneNumber,
+                email = x.Email,
+                userName = x.UserName,
+                firstName = x.FirstName,
+                lastName = x.LastName,
+                roles = x.UserRoles.ToList().Select(y => y.Role.Name.ToString()).ToList(),
+                avatar = x.UserInfo!=null?(x.UserInfo.Avatar):"",
+                createDate = x.UserInfo!=null?(x.UserInfo.CreateUTC):DateTime.Now,
             });
 
-            return Ok(new BaseResponse<IEnumerable<UserDto>>(result, $"User List"));
+            return Ok(result);
         }
     }
 }

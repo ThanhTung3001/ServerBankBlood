@@ -28,6 +28,7 @@ public class UserInfo : BaseEntity
 
     public IEnumerable<Register> Register { get; set; }
 
-    public int BloodId { get; set; }
+    public int ?BloodId { get; set; }
+    
     public BloodGroup BloodGroup { get; set; }
 }

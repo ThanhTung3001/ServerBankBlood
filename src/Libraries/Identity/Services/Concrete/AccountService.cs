@@ -34,7 +34,6 @@ namespace Identity.Services.Concrete
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JWTSettings _jwtSettings;
         private readonly IEmailService _emailService;
-
         private readonly IGenericRepository<UserInfo> _repository;
         public AccountService(UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
@@ -183,8 +182,6 @@ namespace Identity.Services.Concrete
                 UserName = request.UserName,
 
             };
-
-
             var result = await _userManager.CreateAsync(newUser, request.Password);
             if (result.Succeeded)
             {
@@ -194,7 +191,7 @@ namespace Identity.Services.Concrete
                     FullName = newUser.FirstName,
                     Avatar = $"https://ui-avatars.com/api/?name={newUser.UserName}"
                 };
-                var userRepons = _repository.Insert(userInfo);
+                var userResponse = _repository.Insert(userInfo);
 
                 await _userManager.AddToRoleAsync(newUser, Roles.Basic.ToString());
                 var verificationUri = await SendVerificationEmail(newUser, uri);
@@ -227,7 +224,14 @@ namespace Identity.Services.Concrete
         {
             //return await _userManager.Users.ToListAsync();
 
-            return await _userManager.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).ToListAsync(); //lazzyloading
+            return await _userManager.Users.Include(u => u.UserRoles)
+            .ThenInclude(ur => ur.Role).ToListAsync(); //lazzyloading
+        }
+
+        public bool ExistUserByEmail(string email)
+        {
+            var user =  _userManager.Users.FirstOrDefault(e => e.Email == email);
+            return user != null;
         }
 
         private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user, string ipAddress)

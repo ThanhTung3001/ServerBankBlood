@@ -31,8 +31,6 @@ public class CrudControllerBase<TEntity>:ControllerBase where TEntity:BaseEntity
         try
         {
             var dataPaging = await _GenericRepository.PaginationList(listQuery);
-           
-            
             return Ok(dataPaging);
         }
         catch (Exception e)
@@ -84,7 +82,7 @@ public class CrudControllerBase<TEntity>:ControllerBase where TEntity:BaseEntity
     }
     
     [HttpDelete("{Id}")]
-    public async Task<ActionResult> Gets(int Id)
+    public async Task<ActionResult> Delete(int Id)
     {
         try
         {
