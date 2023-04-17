@@ -17,8 +17,5 @@ namespace Identity.Models
         public List<ApplicationUserRole> UserRoles { get; set; } = new List<ApplicationUserRole>();
         public Hospital Hospital { get; set; }
         public UserInfo UserInfo { get; set; }
-        
-   
-        
     }
 }

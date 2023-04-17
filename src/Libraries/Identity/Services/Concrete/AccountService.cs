@@ -192,7 +192,6 @@ namespace Identity.Services.Concrete
                     Avatar = $"https://ui-avatars.com/api/?name={newUser.UserName}"
                 };
                 var userResponse = _repository.Insert(userInfo);
-
                 await _userManager.AddToRoleAsync(newUser, Roles.Basic.ToString());
                 var verificationUri = await SendVerificationEmail(newUser, uri);
 
@@ -225,7 +224,7 @@ namespace Identity.Services.Concrete
             //return await _userManager.Users.ToListAsync();
             var users = await _userManager.Users.ToListAsync();
 
-            
+
             foreach (var user in users)
             {
                 var usersWithRoles = new List<ApplicationUserRole>();
@@ -234,7 +233,7 @@ namespace Identity.Services.Concrete
                 {
                     usersWithRoles.Add(new ApplicationUserRole()
                     {
-                        Role =new ApplicationRole()
+                        Role = new ApplicationRole()
                         {
                             Name = role
                         }

@@ -4,6 +4,7 @@ using Identity.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [Migration("20230417040545_MirationUser")]
+    partial class MirationUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Identity")
                 .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -53,7 +54,7 @@ namespace WebApi.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("Role", "Identity");
+                    b.ToTable("Role", (string)null);
                 });
 
             modelBuilder.Entity("Identity.Models.ApplicationRoleClaim", b =>
@@ -77,7 +78,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleClaims", "Identity");
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Identity.Models.ApplicationUser", b =>
@@ -156,7 +157,7 @@ namespace WebApi.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("User", "Identity");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("Identity.Models.ApplicationUserClaim", b =>
@@ -180,7 +181,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserClaims", "Identity");
+                    b.ToTable("UserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Identity.Models.ApplicationUserLogin", b =>
@@ -201,7 +202,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserLogins", "Identity");
+                    b.ToTable("UserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Identity.Models.ApplicationUserRole", b =>
@@ -216,7 +217,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles", "Identity");
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Identity.Models.ApplicationUserToken", b =>
@@ -235,7 +236,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UserTokens", "Identity");
+                    b.ToTable("UserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Models.DbEntities.Attachments.Media", b =>
@@ -277,7 +278,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("HospitalId");
 
-                    b.ToTable("Media", "Identity");
+                    b.ToTable("Media");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Hospitals.Hospital", b =>
@@ -320,7 +321,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Hospital", "Identity");
+                    b.ToTable("Hospital");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Registration.BloodGroup", b =>
@@ -360,7 +361,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BloodGroup", "Identity");
+                    b.ToTable("BloodGroup");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Registration.Register", b =>
@@ -409,7 +410,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("UserInfoId");
 
-                    b.ToTable("Register", "Identity");
+                    b.ToTable("Register");
                 });
 
             modelBuilder.Entity("Models.DbEntities.User.UserInfo", b =>
@@ -475,7 +476,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("BloodGroupId");
 
-                    b.ToTable("UserInfo", "Identity");
+                    b.ToTable("UserInfo");
                 });
 
             modelBuilder.Entity("Identity.Models.ApplicationRoleClaim", b =>

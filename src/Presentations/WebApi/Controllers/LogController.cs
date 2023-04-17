@@ -15,7 +15,7 @@ namespace WebApi.Controllers
     {
         private readonly ILoginLogService _loginLogService;
         private readonly IMapper _mapper;
-        public LogController( ILoginLogService loginLogService, IMapper mapper)
+        public LogController(ILoginLogService loginLogService, IMapper mapper)
         {
             _loginLogService = loginLogService;
             _mapper = mapper;

@@ -15,21 +15,21 @@ namespace Data.Contexts
     {
 
         public DbSet<Blog> Blogs { get; set; }
-        
-        public DbSet<Media>Medias { get; set; }
-        
+
+        public DbSet<Media> Medias { get; set; }
+
         public DbSet<Hospital> Hospitals { get; set; }
-        
+
         public DbSet<BloodGroup> BloodGroups { get; set; }
-        
+
         public DbSet<Tag> Tags { get; set; }
-        
-        public DbSet<Category>Categories { get; set; }
-        
+
+        public DbSet<Category> Categories { get; set; }
+
         public DbSet<Event> Events { get; set; }
-        
+
         public DbSet<Register> Registers { get; set; }
-        
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
@@ -43,6 +43,10 @@ namespace Data.Contexts
                 entity.HasOne<UserInfo>(reg => reg.UserInfo)
                     .WithMany(user => user.Register)
                     .HasForeignKey(e => e.UserId);
+
+                entity.HasOne<BloodGroup>(res => res.BloodGroup)
+                .WithMany(blood => blood.Registers)
+                .HasForeignKey(res => res.BloodGroupId);
             });
             modelBuilder.Entity<Blog>(entity =>
             {
@@ -51,8 +55,8 @@ namespace Data.Contexts
                     .HasForeignKey(e => e.CategoryId);
             });
             modelBuilder.Entity<BlogTag>().HasKey(sc => new { sc.BlogId, sc.TagId });
-            
-            
+
+
             modelBuilder.Entity<BlogTag>()
                 .HasOne<Blog>(sc => sc.Blog)
                 .WithMany(s => s.BlogTags)
@@ -63,19 +67,19 @@ namespace Data.Contexts
                 .HasOne<Tag>(sc => sc.Tag)
                 .WithMany(s => s.BlogTags)
                 .HasForeignKey(sc => sc.TagId);
-            
+
             modelBuilder.Entity<EventTag>()
                 .HasOne<Event>(sc => sc.Event)
                 .WithMany(s => s.EventTags)
                 .HasForeignKey(sc => sc.EventId);
 
             modelBuilder.Entity<EventTag>().HasKey(sc => new { sc.EventId, sc.TagId });
-            
+
             modelBuilder.Entity<EventTag>()
                 .HasOne<Tag>(sc => sc.Tag)
                 .WithMany(s => s.EventTags)
                 .HasForeignKey(sc => sc.TagId);
-            
+
             modelBuilder.Entity<BloodGroup>()
                 .HasMany<UserInfo>(sc => sc.UserInfo)
                 .WithOne(s => s.BloodGroup)

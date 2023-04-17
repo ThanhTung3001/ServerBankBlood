@@ -1,8 +1,6 @@
 ﻿using Identity.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Models.DbEntities.Attachments;
-using Models.DbEntities.Registration;
 using Models.DbEntities.User;
 
 namespace Identity.Contexts
@@ -23,7 +21,7 @@ namespace Identity.Contexts
             builder.HasDefaultSchema("Identity");
             builder.Entity<ApplicationUser>(entity =>
             {
-                
+
                 entity.ToTable(name: "User");
                 entity.HasOne<UserInfo>(model => model.UserInfo).WithOne()
                     .HasForeignKey<UserInfo>(model => model.AppUserId);
