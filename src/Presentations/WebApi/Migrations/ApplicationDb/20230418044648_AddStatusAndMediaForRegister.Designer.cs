@@ -4,6 +4,7 @@ using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebApi.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230418044648_AddStatusAndMediaForRegister")]
+    partial class AddStatusAndMediaForRegister
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,6 +53,9 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("RegisterId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -71,37 +76,9 @@ namespace WebApi.Migrations.ApplicationDb
 
                     b.HasIndex("HospitalId");
 
+                    b.HasIndex("RegisterId");
+
                     b.ToTable("Medias");
-                });
-
-            modelBuilder.Entity("Models.DbEntities.Attachments.MediaRegister", b =>
-                {
-                    b.Property<int>("RegisterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MediaId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CreateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateUTC")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdateBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("RegisterId", "MediaId");
-
-                    b.HasIndex("MediaId");
-
-                    b.ToTable("MediaRegister");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Hospitals.Hospital", b =>
@@ -562,25 +539,10 @@ namespace WebApi.Migrations.ApplicationDb
                     b.HasOne("Models.DbEntities.Hospitals.Hospital", null)
                         .WithMany("MediaList")
                         .HasForeignKey("HospitalId");
-                });
 
-            modelBuilder.Entity("Models.DbEntities.Attachments.MediaRegister", b =>
-                {
-                    b.HasOne("Models.DbEntities.Attachments.Media", "media")
-                        .WithMany("registrations")
-                        .HasForeignKey("MediaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.DbEntities.Registration.Register", "register")
+                    b.HasOne("Models.DbEntities.Registration.Register", null)
                         .WithMany("Medias")
-                        .HasForeignKey("RegisterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("media");
-
-                    b.Navigation("register");
+                        .HasForeignKey("RegisterId");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Post.Blog", b =>
@@ -666,11 +628,6 @@ namespace WebApi.Migrations.ApplicationDb
                         .HasForeignKey("BloodId");
 
                     b.Navigation("BloodGroup");
-                });
-
-            modelBuilder.Entity("Models.DbEntities.Attachments.Media", b =>
-                {
-                    b.Navigation("registrations");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Hospitals.Hospital", b =>

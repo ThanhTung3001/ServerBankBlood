@@ -24,6 +24,7 @@ namespace WebApi
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 var configuration = services.GetRequiredService<IConfiguration>();
                 //--------------------------------------------------------------------------------
+
                 Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Application", "WebApi")

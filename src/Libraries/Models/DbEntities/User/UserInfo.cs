@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Models.DbEntities.Registration;
 
 namespace Models.DbEntities.User;
@@ -26,9 +27,10 @@ public class UserInfo : BaseEntity
 
     public long Iccid { get; set; }
 
+    [JsonIgnore]
     public IEnumerable<Register> Register { get; set; }
 
-    public int ?BloodId { get; set; }
-    
+    public int? BloodId { get; set; }
+
     public BloodGroup BloodGroup { get; set; }
 }

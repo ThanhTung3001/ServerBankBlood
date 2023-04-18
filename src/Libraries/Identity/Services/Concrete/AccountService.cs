@@ -188,7 +188,7 @@ namespace Identity.Services.Concrete
                 var userInfo = new UserInfo()
                 {
                     AppUserId = newUser.Id,
-                    FullName = newUser.FirstName,
+                    FullName = newUser.FirstName + " " + newUser.LastName,
                     Avatar = $"https://ui-avatars.com/api/?name={newUser.UserName}"
                 };
                 var userResponse = _repository.Insert(userInfo);

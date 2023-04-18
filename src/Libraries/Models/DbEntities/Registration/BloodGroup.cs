@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Models.DbEntities.User;
 
 namespace Models.DbEntities.Registration;
@@ -15,8 +16,9 @@ public class BloodGroup : BaseEntity
 
     public string Avatar { get; set; }
 
+    [JsonIgnore]
     public IEnumerable<UserInfo> UserInfo { get; set; }
-
+    [JsonIgnore]
     public IEnumerable<Register> Registers { get; set; }
 
 

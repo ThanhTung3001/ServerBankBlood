@@ -41,7 +41,7 @@ namespace Data.Repos
 
         public void UpdateEntry(T entity)
         {
-           // entity.ModificationDate = DateTime.Now;
+            // entity.ModificationDate = DateTime.Now;
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
         }
@@ -55,7 +55,7 @@ namespace Data.Repos
             var totalRecords = await _context.Set<T>().CountAsync();
             var totalPages = totalRecords / query.PageSize;
 
-            return new PaginationListResponse<List<T>>(pagedData,query.PageNumber,query.PageSize,totalPages,totalRecords);
+            return new PaginationListResponse<List<T>>(pagedData, query.PageNumber, query.PageSize, totalPages + 1, totalRecords);
         }
 
         public T Find(Expression<Func<T, bool>> match)

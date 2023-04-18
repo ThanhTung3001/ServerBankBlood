@@ -85,6 +85,18 @@ namespace Data.Contexts
                 .WithOne(s => s.BloodGroup)
                 .HasForeignKey(sc => sc.BloodId);
 
+            modelBuilder.Entity<MediaRegister>().HasKey(sc => new { sc.RegisterId, sc.MediaId });
+
+            modelBuilder.Entity<Media>()
+                .HasMany<MediaRegister>(sc => sc.registrations)
+                .WithOne(s => s.media)
+                .HasForeignKey(sc => sc.MediaId);
+
+            modelBuilder.Entity<Register>()
+                .HasMany<MediaRegister>(sc => sc.Medias)
+                .WithOne(s => s.register)
+                .HasForeignKey(sc => sc.RegisterId);
+
         }
 
         public void RegisterEntityMapping(ModelBuilder modelBuilder)

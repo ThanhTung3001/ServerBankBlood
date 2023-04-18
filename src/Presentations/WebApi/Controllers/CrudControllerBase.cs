@@ -20,11 +20,11 @@ public class CrudControllerBase<TEntity> : ControllerBase where TEntity : BaseEn
         _GenericRepository = genericRepository;
         _mapper = mapper;
     }
-    private IGenericRepository<TEntity> _GenericRepository { get; set; }
-    private IMapper _mapper { get; set; }
+    public IGenericRepository<TEntity> _GenericRepository { get; set; }
+    public IMapper _mapper { get; set; }
 
     [HttpGet]
-    public async Task<ActionResult> Gets([FromQuery] PaginationListQuery listQuery)
+    public virtual async Task<ActionResult> Gets([FromQuery] PaginationListQuery listQuery)
     {
         try
         {

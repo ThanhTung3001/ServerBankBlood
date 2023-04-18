@@ -31,6 +31,7 @@ namespace Core
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("WebApi"));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
             services.AddTransient<IDbContext, ApplicationDbContext>();
         }
