@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Models.DbEntities.User;
 
 namespace Models.DTOs.Account
 {
@@ -17,5 +18,7 @@ namespace Models.DTOs.Account
         public string avatar {get;set;}
 
         public DateTime createDate {get;set;}
+
+        public UserInfo userInfo {get;set;}
     }
 }

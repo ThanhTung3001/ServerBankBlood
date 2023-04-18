@@ -1,6 +1,7 @@
 ﻿using Core.Exceptions;
 using Core.Helpers;
 using Core.Interfaces;
+using Data.Contexts;
 using Data.Repos;
 using Identity.Models;
 using Identity.Services.Interfaces;
@@ -35,12 +36,15 @@ namespace Identity.Services.Concrete
         private readonly JWTSettings _jwtSettings;
         private readonly IEmailService _emailService;
         private readonly IGenericRepository<UserInfo> _repository;
+        private readonly ApplicationDbContext _context ;
         public AccountService(UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             IOptions<JWTSettings> jwtSettings,
             SignInManager<ApplicationUser> signInManager,
             IGenericRepository<UserInfo> repository,
-            IEmailService emailService)
+            IEmailService emailService,
+            ApplicationDbContext context 
+            )
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -48,6 +52,7 @@ namespace Identity.Services.Concrete
             _jwtSettings = jwtSettings.Value;
             _emailService = emailService;
             _repository = repository;
+            _context = context;
         }
         public async Task<BaseResponse<AuthenticationResponse>> AuthenticateAsync(AuthenticationRequest request)
         {
@@ -337,6 +342,7 @@ namespace Identity.Services.Concrete
                 var user = await _userManager.FindByNameAsync(username);
                 await _userManager.RemoveFromRolesAsync(user, (await _userManager.GetRolesAsync(user)).ToArray());
                 await _userManager.AddToRolesAsync(user, roles);
+                 await _context.SaveChangesAsync();
             }
 
             catch (Exception ex)
@@ -350,6 +356,16 @@ namespace Identity.Services.Concrete
         {
             var user = await _userManager.FindByNameAsync(username);
             await _userManager.DeleteAsync(user);
+        }
+
+        public async Task<ApplicationUser> GetFullUserInfo(string username)
+        {
+              var user =  await _userManager.FindByNameAsync(username);
+              if(user!=null){
+                var userInfo = _repository.Find(e=>e.AppUserId==user.Id);
+                user.UserInfo = userInfo;
+              }
+              return user;
         }
     }
 }

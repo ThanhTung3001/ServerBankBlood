@@ -213,6 +213,9 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Property<DateTime>("CreateUTC")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("PublicTime")
                         .HasColumnType("datetime2");
 
@@ -224,6 +227,9 @@ namespace WebApi.Migrations.ApplicationDb
 
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

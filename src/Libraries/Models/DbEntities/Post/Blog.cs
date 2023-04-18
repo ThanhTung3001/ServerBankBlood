@@ -11,6 +11,10 @@ public class Blog : BaseEntity
     public string Title { get; set; }
     
     public string Avatar { get; set; }
+
+    public string Description {get;set;}
+
+    public int ViewCount {get;set;}
     
     public List<Media> Media { get; set; }
     
@@ -18,6 +22,6 @@ public class Blog : BaseEntity
     public int CategoryId { get; set; }
     public Category Category { get; set; }
     
-    public IEnumerable<BlogTag> BlogTags { get; set; }
+    public IEnumerable<BlogTag> BlogTags { get; set; } = new List<BlogTag>();
 
 }

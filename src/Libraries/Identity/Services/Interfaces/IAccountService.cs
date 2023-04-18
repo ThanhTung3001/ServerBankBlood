@@ -21,7 +21,8 @@ namespace Identity.Services.Interfaces
 
         bool ExistUserByEmail(string email);
 
-
         Task RemoveUser(string username);
+
+        Task<ApplicationUser> GetFullUserInfo(string username);
     }
 }

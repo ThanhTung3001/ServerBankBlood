@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Net;
+using System.Collections.Generic;
 using Data.Mongo.Collections;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -8,8 +9,11 @@ using Services.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 using Data.Repos;
 using Identity.Models;
+using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace WebApi.Controllers
 {
@@ -17,15 +21,18 @@ namespace WebApi.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+
+        private readonly IMapper _mapper ;
         private readonly IAccountService _accountService;
         private readonly ILoginLogService _loginLogService;
 
 
 
-        public AccountController(IAccountService accountService, ILoginLogService loginLogService)
+        public AccountController(IAccountService accountService, ILoginLogService loginLogService,IMapper mapper )
         {
             _accountService = accountService;
             _loginLogService = loginLogService;
+            _mapper = mapper;
         }
 
         [HttpPost("authenticate")]
@@ -46,6 +53,30 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        [Authorize]
+        [HttpGet("getMe")]
+        public async Task<IActionResult> GetMe(){
+              try
+              {
+                  var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                //   Console.Write(userId);
+                  var userInfo =  await _accountService.GetFullUserInfo(username);
+                  var result =  _mapper.Map<UserDto>(userInfo);
+                  return Ok(new {
+                    data = result,
+                    message = "Get data sucess"
+                  });
+              }
+              catch (Exception ex)
+              {
+                return BadRequest(new {
+                      data = "",
+                      message = $"Get data Fail {ex.ToString()}"
+                });
+                throw;
+              }
+                
+        }
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
@@ -128,12 +159,12 @@ namespace WebApi.Controllers
 
                 });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
 
                 return BadRequest(new   {
-                    message = "Update Role Success",
-                    code = 200
+                    message = $"Update Role Fail  {ex.ToString()}",
+                    code = 400
 
                 });
             }

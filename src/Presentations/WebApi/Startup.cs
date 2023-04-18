@@ -100,7 +100,8 @@ namespace WebApi
             loggerFactory.AddSerilog();
 
             app.UseHttpsRedirection();
-
+            app.UseStaticFiles();
+            app.UseDirectoryBrowser();
             app.UseRouting();
             app.UseGraphiQl();
             app.UseAuthentication();

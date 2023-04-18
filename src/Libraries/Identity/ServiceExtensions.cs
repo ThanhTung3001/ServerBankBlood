@@ -23,6 +23,7 @@ namespace Identity
         {
             #region Services
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IUploadFileService, UploadFileService>();
             #endregion
 
             #region Configure
