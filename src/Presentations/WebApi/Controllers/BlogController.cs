@@ -17,7 +17,7 @@ namespace WebApi.Controllers;
 public class BlogController : CrudControllerBase<Blog>
 {
     public ApplicationDbContext _appDbContext { get; set; }
-    public BlogController(IGenericRepository<Blog> genericRepository, IMapper mapper,ApplicationDbContext appDbContext) : base(genericRepository, mapper)
+    public BlogController(IGenericRepository<Blog> genericRepository, IMapper mapper, ApplicationDbContext appDbContext) : base(genericRepository, mapper)
     {
         _appDbContext = appDbContext;
     }
@@ -28,7 +28,7 @@ public class BlogController : CrudControllerBase<Blog>
 
         try
         {
-            var response = await _appDbContext.Blogs
+            var response = await _appDbContext.Blogs.OrderByDescending(e=>e.Id)
                  .Skip((query.PageNumber - 1) * query.PageSize)
                 .Take(query.PageSize).
                  Include(e => e.Category)
@@ -41,6 +41,24 @@ public class BlogController : CrudControllerBase<Blog>
 
 
             return Ok(new PaginationListResponse<List<BlogDto>>(result, query.PageNumber, query.PageSize, totalPages, totalRecords));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new BaseResponse<object>(message: e.ToString()));
+
+        }
+
+    }
+   
+    [HttpGet("{id}")]
+    public async Task<ActionResult> GetById(int id)
+    {
+
+        try
+        {
+            var response = await _appDbContext.Blogs.Where(e => e.Id == id).FirstAsync();
+
+            return Ok(new BaseResponse<object>(response,"Get data success"));
         }
         catch (Exception e)
         {

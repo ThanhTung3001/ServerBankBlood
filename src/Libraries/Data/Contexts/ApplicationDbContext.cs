@@ -30,6 +30,8 @@ namespace Data.Contexts
 
         public DbSet<Register> Registers { get; set; }
 
+         public DbSet<EventUserSub> EventUserSubs { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
@@ -96,6 +98,19 @@ namespace Data.Contexts
                 .HasMany<MediaRegister>(sc => sc.Medias)
                 .WithOne(s => s.register)
                 .HasForeignKey(sc => sc.RegisterId);
+
+            modelBuilder.Entity<EventUserSub>().HasKey(sc => new { sc.EventId, sc.UserInfoId });
+
+            modelBuilder.Entity<Event>()
+                .HasMany<EventUserSub>(sc=> sc.EventUserSubs)
+                .WithOne(s => s.Event)
+                .HasForeignKey(sc => sc.EventId);
+
+            modelBuilder.Entity<UserInfo>()
+                .HasMany<EventUserSub>(sc => sc.EventUserSubs)
+                .WithOne(s => s.userInfo)
+                .HasForeignKey(sc => sc.UserInfoId);   
+
 
         }
 

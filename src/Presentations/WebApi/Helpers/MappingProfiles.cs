@@ -9,6 +9,7 @@ using Models.DbEntities.User;
 using Models.DTOs.Account;
 using Models.DTOs.Blogs;
 using Models.DTOs.BloodgroupDtos;
+using Models.DTOs.Event;
 using Models.DTOs.Log;
 using Models.DTOs.Note;
 
@@ -39,6 +40,12 @@ namespace WebApi.Helpers
             CreateMap<BlogTag,BlogTagDto>();
 
             CreateMap<Category,CategoryDto>();
+            
+            CreateMap<Event,EventDto>();
+
+            CreateMap<EventUserSub,EventUserSubDto>();
+
+            CreateMap<UserInfo,UserInfoDto>();
         }
     }
 }

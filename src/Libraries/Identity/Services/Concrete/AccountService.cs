@@ -194,7 +194,8 @@ namespace Identity.Services.Concrete
                 {
                     AppUserId = newUser.Id,
                     FullName = newUser.FirstName + " " + newUser.LastName,
-                    Avatar = $"https://ui-avatars.com/api/?name={newUser.UserName}"
+                    Avatar = $"https://ui-avatars.com/api/?name={newUser.UserName}",
+                    Email = newUser.Email
                 };
                 var userResponse = _repository.Insert(userInfo);
                 await _userManager.AddToRoleAsync(newUser, Roles.Basic.ToString());

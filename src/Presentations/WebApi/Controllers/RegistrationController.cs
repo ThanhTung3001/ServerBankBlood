@@ -28,7 +28,7 @@ public class RegistrationController : CrudControllerBase<Register>
 
         try
         {
-            var response = await _appDbContext.Registers
+            var response = await _appDbContext.Registers.OrderByDescending(e=>e.Id)
                  .Skip((query.PageNumber - 1) * query.PageSize)
                 .Take(query.PageSize).
                  Include(e => e.BloodGroup)

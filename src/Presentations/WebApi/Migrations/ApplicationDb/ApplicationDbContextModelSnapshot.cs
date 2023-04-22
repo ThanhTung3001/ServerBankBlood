@@ -372,6 +372,36 @@ namespace WebApi.Migrations.ApplicationDb
                     b.ToTable("EventTag");
                 });
 
+            modelBuilder.Entity("Models.DbEntities.Post.EventUserSub", b =>
+                {
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserInfoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("EventId", "UserInfoId");
+
+                    b.HasIndex("UserInfoId");
+
+                    b.ToTable("EventUserSubs");
+                });
+
             modelBuilder.Entity("Models.DbEntities.Post.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -527,6 +557,9 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Property<int>("DonateAmount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
@@ -638,6 +671,25 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("Models.DbEntities.Post.EventUserSub", b =>
+                {
+                    b.HasOne("Models.DbEntities.Post.Event", "Event")
+                        .WithMany("EventUserSubs")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.DbEntities.User.UserInfo", "userInfo")
+                        .WithMany("EventUserSubs")
+                        .HasForeignKey("UserInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("userInfo");
+                });
+
             modelBuilder.Entity("Models.DbEntities.Registration.Register", b =>
                 {
                     b.HasOne("Models.DbEntities.Registration.BloodGroup", "BloodGroup")
@@ -702,6 +754,8 @@ namespace WebApi.Migrations.ApplicationDb
                 {
                     b.Navigation("EventTags");
 
+                    b.Navigation("EventUserSubs");
+
                     b.Navigation("Media");
                 });
 
@@ -726,6 +780,8 @@ namespace WebApi.Migrations.ApplicationDb
 
             modelBuilder.Entity("Models.DbEntities.User.UserInfo", b =>
                 {
+                    b.Navigation("EventUserSubs");
+
                     b.Navigation("Register");
                 });
 #pragma warning restore 612, 618

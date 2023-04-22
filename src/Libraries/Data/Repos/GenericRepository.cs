@@ -48,7 +48,7 @@ namespace Data.Repos
 
         public async Task<PaginationListResponse<List<T>>> PaginationList(PaginationListQuery query)
         {
-            var pagedData = await _context.Set<T>()
+            var pagedData = await _context.Set<T>().OrderByDescending(e=>e.Id)
                 .Skip((query.PageNumber - 1) * query.PageSize)
                 .Take(query.PageSize)
                 .ToListAsync();
