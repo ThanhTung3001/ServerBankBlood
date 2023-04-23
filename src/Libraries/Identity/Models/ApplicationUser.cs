@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using Models.DbEntities.Attachments;
 using Models.DbEntities.Hospitals;
-using Models.DbEntities.Registration;
 using Models.DbEntities.User;
-using Models.DTOs.Account;
 
 namespace Identity.Models
 {

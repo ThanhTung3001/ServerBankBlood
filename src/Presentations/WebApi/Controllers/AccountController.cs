@@ -1,6 +1,4 @@
-﻿using System.Net;
-using System.Collections.Generic;
-using Data.Mongo.Collections;
+﻿using Data.Mongo.Collections;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +8,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
-using Data.Repos;
-using Identity.Models;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 
@@ -48,7 +44,7 @@ namespace WebApi.Controllers
                     LoginTime = DateTime.Now,
                     UserEmail = request.Email
                 };
-                await _loginLogService.Add(log);
+             //   await _loginLogService.Add(log);
             }
             return Ok(result);
         }

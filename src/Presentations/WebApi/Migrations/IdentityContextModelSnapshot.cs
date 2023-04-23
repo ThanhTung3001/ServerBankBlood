@@ -246,11 +246,17 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("BlogId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreateBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateUTC")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("EventId")
+                        .HasColumnType("int");
 
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
@@ -275,9 +281,48 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BlogId");
+
+                    b.HasIndex("EventId");
+
                     b.HasIndex("HospitalId");
 
                     b.ToTable("Media", "Identity");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Attachments.MediaRegister", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MediaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RegisterId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MediaId");
+
+                    b.HasIndex("RegisterId");
+
+                    b.ToTable("MediaRegister", "Identity");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Hospitals.Hospital", b =>
@@ -321,6 +366,267 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Hospital", "Identity");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.Blog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PublicTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Blog", "Identity");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.BlogTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("BlogTag", "Identity");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category", "Identity");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FinishTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Event", "Identity");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.EventTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("EventTag", "Identity");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.EventUserSub", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserInfoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("UserInfoId");
+
+                    b.ToTable("EventUserSub", "Identity");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateUTC")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tag", "Identity");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Registration.BloodGroup", b =>
@@ -401,6 +707,9 @@ namespace WebApi.Migrations
                     b.Property<int?>("UserInfoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BloodGroupId");
@@ -446,6 +755,9 @@ namespace WebApi.Migrations
 
                     b.Property<int>("DonateAmount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
@@ -544,9 +856,104 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("Models.DbEntities.Attachments.Media", b =>
                 {
+                    b.HasOne("Models.DbEntities.Post.Blog", null)
+                        .WithMany("Media")
+                        .HasForeignKey("BlogId");
+
+                    b.HasOne("Models.DbEntities.Post.Event", null)
+                        .WithMany("Media")
+                        .HasForeignKey("EventId");
+
                     b.HasOne("Models.DbEntities.Hospitals.Hospital", null)
                         .WithMany("MediaList")
                         .HasForeignKey("HospitalId");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Attachments.MediaRegister", b =>
+                {
+                    b.HasOne("Models.DbEntities.Attachments.Media", "media")
+                        .WithMany("registrations")
+                        .HasForeignKey("MediaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.DbEntities.Registration.Register", "register")
+                        .WithMany("Medias")
+                        .HasForeignKey("RegisterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("media");
+
+                    b.Navigation("register");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.Blog", b =>
+                {
+                    b.HasOne("Models.DbEntities.Post.Category", "Category")
+                        .WithMany("Blogs")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.BlogTag", b =>
+                {
+                    b.HasOne("Models.DbEntities.Post.Blog", "Blog")
+                        .WithMany("BlogTags")
+                        .HasForeignKey("BlogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.DbEntities.Post.Tag", "Tag")
+                        .WithMany("BlogTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Blog");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.EventTag", b =>
+                {
+                    b.HasOne("Models.DbEntities.Post.Event", "Event")
+                        .WithMany("EventTags")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.DbEntities.Post.Tag", "Tag")
+                        .WithMany("EventTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.EventUserSub", b =>
+                {
+                    b.HasOne("Models.DbEntities.Post.Event", "Event")
+                        .WithMany("EventUserSubs")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.DbEntities.User.UserInfo", "userInfo")
+                        .WithMany("EventUserSubs")
+                        .HasForeignKey("UserInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("userInfo");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Registration.Register", b =>
@@ -601,11 +1008,44 @@ namespace WebApi.Migrations
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("Models.DbEntities.Attachments.Media", b =>
+                {
+                    b.Navigation("registrations");
+                });
+
             modelBuilder.Entity("Models.DbEntities.Hospitals.Hospital", b =>
                 {
                     b.Navigation("MediaList");
 
                     b.Navigation("Register");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.Blog", b =>
+                {
+                    b.Navigation("BlogTags");
+
+                    b.Navigation("Media");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.Category", b =>
+                {
+                    b.Navigation("Blogs");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.Event", b =>
+                {
+                    b.Navigation("EventTags");
+
+                    b.Navigation("EventUserSubs");
+
+                    b.Navigation("Media");
+                });
+
+            modelBuilder.Entity("Models.DbEntities.Post.Tag", b =>
+                {
+                    b.Navigation("BlogTags");
+
+                    b.Navigation("EventTags");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Registration.BloodGroup", b =>
@@ -615,8 +1055,15 @@ namespace WebApi.Migrations
                     b.Navigation("UserInfo");
                 });
 
+            modelBuilder.Entity("Models.DbEntities.Registration.Register", b =>
+                {
+                    b.Navigation("Medias");
+                });
+
             modelBuilder.Entity("Models.DbEntities.User.UserInfo", b =>
                 {
+                    b.Navigation("EventUserSubs");
+
                     b.Navigation("Register");
                 });
 #pragma warning restore 612, 618
