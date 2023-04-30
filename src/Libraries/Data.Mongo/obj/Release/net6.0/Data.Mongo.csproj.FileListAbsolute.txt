@@ -1,0 +1,12 @@
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/bin/Release/net6.0/Data.Mongo.deps.json
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/bin/Release/net6.0/Data.Mongo.dll
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/bin/Release/net6.0/Data.Mongo.pdb
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/obj/Release/net6.0/Data.Mongo.csproj.AssemblyReference.cache
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/obj/Release/net6.0/Data.Mongo.GeneratedMSBuildEditorConfig.editorconfig
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/obj/Release/net6.0/Data.Mongo.AssemblyInfoInputs.cache
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/obj/Release/net6.0/Data.Mongo.AssemblyInfo.cs
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/obj/Release/net6.0/Data.Mongo.csproj.CoreCompileInputs.cache
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/obj/Release/net6.0/Data.Mongo.dll
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/obj/Release/net6.0/refint/Data.Mongo.dll
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/obj/Release/net6.0/Data.Mongo.pdb
+/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data.Mongo/obj/Release/net6.0/ref/Data.Mongo.dll

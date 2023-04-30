@@ -1,9 +1,8 @@
-
-using System.IO;
-using System.Net.Http.Headers;
+using System;
 using System.Threading.Tasks;
 using Identity.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -19,21 +18,21 @@ namespace WebApi.Controllers
             _uploadFileService  = uploadFileService;
         }
 
-        [HttpPost("{path}")]
-        public async Task<IActionResult> UploadImage(string path)
+        [HttpPost]
+        public async Task<IActionResult> UploadImage([FromQuery]string path,IFormFile file)
         {
             try
             {
-               var file = Request.Form.Files["image"];
+             //  var file = Request.Form.Files["image"];
                 var media = await _uploadFileService.UploadFile(path,file);
                 return Ok(new {
                     message = "Upload file success",
                     data = media
                 });
             }
-            catch
+            catch(Exception ex)
             {
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500,$"Internal server error {ex.ToString()}");
             }
         }
 

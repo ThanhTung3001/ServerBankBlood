@@ -1,0 +1,134 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data/Data.csproj": {}
+  },
+  "projects": {
+    "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data/Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data/Data.csproj",
+        "projectName": "Data",
+        "projectPath": "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data/Data.csproj",
+        "packagesPath": "/Users/tunglvt/.nuget/packages/",
+        "outputPath": "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Data/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/tunglvt/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Models/Models.csproj": {
+                "projectPath": "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Models/Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Models/Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Models/Models.csproj",
+        "projectName": "Models",
+        "projectPath": "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Models/Models.csproj",
+        "packagesPath": "/Users/tunglvt/.nuget/packages/",
+        "outputPath": "/Users/tunglvt/Desktop/react/MyProject/Server/src/Libraries/Models/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/tunglvt/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

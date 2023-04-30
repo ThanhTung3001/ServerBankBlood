@@ -25,6 +25,8 @@ namespace WebApi
 {
     public class Startup
     {
+        // private object spa;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -55,6 +57,11 @@ namespace WebApi
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
+            //  services.AddSpaStaticFiles(configuration=>{});
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "wwwroot";
             });
             // services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize);
 
@@ -98,9 +105,14 @@ namespace WebApi
 
             //app.UseSerilogRequestLogging();
             loggerFactory.AddSerilog();
-
+            app.UseSpaStaticFiles();
+            // app.UseSpa(spa =>
+            // {
+            //     spa.Options.SourcePath = "ClientApp/dist";
+          
+            // });
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            // app.UseStaticFiles();
             app.UseDirectoryBrowser();
             app.UseRouting();
             app.UseGraphiQl();
@@ -112,7 +124,14 @@ namespace WebApi
                 .SetIsOriginAllowed((host) => true)
                 .AllowCredentials()
             );
-
+            // app.UseSpa(spa =>
+            //   {
+            //       spa.Options.SourcePath = "ClientApp";
+                //   if (env.IsDevelopment())
+                //   {
+                //       spa.UseReactDevelopmentServer(npmScript: "dev");
+                //   }
+            //   });
             //error middleware
             app.UseErrorHandlingMiddleware();
 

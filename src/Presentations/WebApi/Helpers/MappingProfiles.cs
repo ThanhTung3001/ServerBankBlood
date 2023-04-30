@@ -37,15 +37,18 @@ namespace WebApi.Helpers
 
             CreateMap<Tag, TagDto>();
 
-            CreateMap<BlogTag,BlogTagDto>();
+            CreateMap<BlogTag, BlogTagDto>();
 
-            CreateMap<Category,CategoryDto>();
-            
-            CreateMap<Event,EventDto>();
+            CreateMap<Category, CategoryDto>();
 
-            CreateMap<EventUserSub,EventUserSubDto>();
+            CreateMap<Event, EventDto>();
 
-            CreateMap<UserInfo,UserInfoDto>();
+            CreateMap<EventUserSub, EventUserSubDto>();
+
+            CreateMap<UserInfo, UserInfoDto>();
+
+            CreateMap<RegisterDtoCreate, Register>();
+            CreateMap<Register, RegisterDtoCreate>();
         }
     }
 }

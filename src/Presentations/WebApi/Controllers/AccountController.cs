@@ -48,6 +48,24 @@ namespace WebApi.Controllers
             }
             return Ok(result);
         }
+        [Authorize]
+          [HttpPost("authenticate-google")]
+        public async Task<IActionResult> AuthenticateAsyncWithGoogle(AuthenticationRequestGoogleModel request)
+        {
+            //auth
+            var result = await _accountService.SignInAsyncWithGoogle(request);
+            if (result.Errors == null || !result.Errors.Any())
+            {
+                //mongo usage example
+                // LoginLog log = new LoginLog()
+                // {
+                //     LoginTime = DateTime.Now,
+                //     UserEmail = request.Email
+                // };
+             //   await _loginLogService.Add(log);
+            }
+            return Ok(result);
+        }
 
         [Authorize]
         [HttpGet("getMe")]
@@ -57,9 +75,9 @@ namespace WebApi.Controllers
                   var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 //   Console.Write(userId);
                   var userInfo =  await _accountService.GetFullUserInfo(username);
-                  var result =  _mapper.Map<UserDto>(userInfo);
+                //   var result =  _mapper.Map<UserDto>(userInfo);
                   return Ok(new {
-                    data = result,
+                    data = userInfo,
                     message = "Get data sucess"
                   });
               }

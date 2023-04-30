@@ -499,6 +499,12 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Property<int>("HospitalId")
                         .HasColumnType("int");
 
+                    b.Property<string>("QrCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReasonCancel")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("RegisterTime")
                         .HasColumnType("datetime2");
 
@@ -532,6 +538,9 @@ namespace WebApi.Migrations.ApplicationDb
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
