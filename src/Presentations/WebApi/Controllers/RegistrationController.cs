@@ -85,7 +85,6 @@ public class RegistrationController : CrudControllerBase<Register>
 
     }
     [HttpPost("DonateBlood")]
-
     public async Task<IActionResult> DonateBlood([FromBody] RegisterDtoCreate model)
     {
         try
@@ -97,10 +96,9 @@ public class RegistrationController : CrudControllerBase<Register>
             //entity.RegisterTime = DateTime.Now;
             entity.CreateUTC = DateTime.Now;
             var response = await _appDbContext.Registers.AddAsync(entity);
-               await _appDbContext.SaveChangesAsync();
+            await _appDbContext.SaveChangesAsync();
             var qrPath = AppGenerateQrCode.GenerateQrCode(response.Entity.Id.ToString(), userInfo.Iccid.ToString());
             entity.QrCode = qrPath;
-      
             _appDbContext.Registers.Update(entity);
             await _appDbContext.SaveChangesAsync();
             var result = _mapper.Map<RegisterDto>(response.Entity);
@@ -109,9 +107,67 @@ public class RegistrationController : CrudControllerBase<Register>
         catch (Exception ex)
         {
 
-            return BadRequest(new BaseResponse<RegisterDto>(null, message: $"Add data {typeof(RegisterDto)} fail {ex.ToString}"));
+            return BadRequest(new BaseResponse<RegisterDto>(null, message: $"Add data {typeof(RegisterDto)} fail {ex.ToString()}"));
         }
 
+    }
+    [HttpGet("GetById/{id}")]
+
+    public async Task<IActionResult> GetById(int id){
+        try
+        {
+            var response = await _appDbContext.Registers.Include(e=>e.BloodGroup)
+            .Include(e=>e.Hospital)
+            .Include(e=>e.UserInfo)
+            .FirstOrDefaultAsync(e=>e.Id==id);
+             return Ok(new BaseResponse<RegisterDto>(_mapper.Map<RegisterDto>(response), message: $"Get data {typeof(RegisterDto)} success"));
+        }
+        catch (System.Exception)
+        {
+            
+            return NotFound();
+        }
+    }
+
+    [HttpGet("GetRegistrationByHospital")]
+    public async Task<IActionResult> GetByHospitalAsync()
+    {
+        var UserEmail = _iAuthenService.UserEmail;
+        var userInfo = await _appDbContext.UserInfo.FirstOrDefaultAsync(e => e.Email == UserEmail);
+        //     var hospital = await _appDbContext.Hospitals.Include(e=>e.Register).FirstOrDefaultAsync(e=>e.Id==userInfo.AppUserId);
+        var register = await _appDbContext.Registers.Include(e => e.UserInfo).Include(e => e.Hospital).Include(e => e.BloodGroup).Where(e => e.HospitalId == userInfo.HospitalId).ToListAsync();
+        return Ok(new BaseResponse<List<RegisterDto>>(_mapper.Map<List<RegisterDto>>(register), message: $"Get data {typeof(RegisterDto)} success"));
+
+    }
+    [HttpPut("UpdateStatusRegis/{id}/{status}")]
+    public async Task<IActionResult> UpdateRegistration(int id, int status)
+    {
+        try
+        {
+            var regis = await _appDbContext.Registers.FirstOrDefaultAsync(e => e.Id == id);
+            if (regis == null)
+            {
+                throw new EntryPointNotFoundException();
+            }
+            else
+            {
+                regis.status = (Models.Enums.StatusType)status;
+                 _appDbContext.Registers.Update(regis);
+                await _appDbContext.SaveChangesAsync();
+                return Ok(new
+                {
+                    message = "Update Regis success",
+                    data = regis
+                });
+            }
+        }
+        catch (System.Exception ex)
+        {
+                return BadRequest(new {
+                     message = $"Update Regis fail: {ex.ToString()}",
+                     data = ""
+                });
+        }
     }
 
 }

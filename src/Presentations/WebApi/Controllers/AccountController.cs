@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
+using Data.Contexts;
 
 namespace WebApi.Controllers
 {
@@ -22,13 +23,16 @@ namespace WebApi.Controllers
         private readonly IAccountService _accountService;
         private readonly ILoginLogService _loginLogService;
 
+        private readonly ApplicationDbContext _AppContext;
 
 
-        public AccountController(IAccountService accountService, ILoginLogService loginLogService,IMapper mapper )
+
+        public AccountController(IAccountService accountService, ILoginLogService loginLogService,IMapper mapper ,ApplicationDbContext AppContext)
         {
             _accountService = accountService;
             _loginLogService = loginLogService;
             _mapper = mapper;
+            _AppContext = AppContext;
         }
 
         [HttpPost("authenticate")]
@@ -75,7 +79,9 @@ namespace WebApi.Controllers
                   var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 //   Console.Write(userId);
                   var userInfo =  await _accountService.GetFullUserInfo(username);
+                  
                 //   var result =  _mapper.Map<UserDto>(userInfo);
+             //   userInfo.Hospital = await _AppContext.Hospitals.Where(e=>e.Id==userInfo.HospitalId).FirstOrDefaultAsync();
                   return Ok(new {
                     data = userInfo,
                     message = "Get data sucess"

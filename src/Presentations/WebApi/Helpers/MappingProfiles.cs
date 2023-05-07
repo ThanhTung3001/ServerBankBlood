@@ -48,6 +48,9 @@ namespace WebApi.Helpers
             CreateMap<UserInfo, UserInfoDto>();
 
             CreateMap<RegisterDtoCreate, Register>();
+
+             CreateMap<RegisterDto, Register>();
+             
             CreateMap<Register, RegisterDtoCreate>();
         }
     }

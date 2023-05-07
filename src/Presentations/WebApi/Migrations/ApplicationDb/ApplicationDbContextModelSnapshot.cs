@@ -572,8 +572,17 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("HospitalId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HospitalId1")
+                        .HasColumnType("int");
+
                     b.Property<long>("Iccid")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -590,9 +599,16 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BloodId");
+
+                    b.HasIndex("HospitalId");
+
+                    b.HasIndex("HospitalId1");
 
                     b.ToTable("UserInfo");
                 });
@@ -732,7 +748,17 @@ namespace WebApi.Migrations.ApplicationDb
                         .WithMany("UserInfo")
                         .HasForeignKey("BloodId");
 
+                    b.HasOne("Models.DbEntities.Hospitals.Hospital", null)
+                        .WithMany("UserInfos")
+                        .HasForeignKey("HospitalId");
+
+                    b.HasOne("Models.DbEntities.Hospitals.Hospital", "Hospital")
+                        .WithMany()
+                        .HasForeignKey("HospitalId1");
+
                     b.Navigation("BloodGroup");
+
+                    b.Navigation("Hospital");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Attachments.Media", b =>
@@ -745,6 +771,8 @@ namespace WebApi.Migrations.ApplicationDb
                     b.Navigation("MediaList");
 
                     b.Navigation("Register");
+
+                    b.Navigation("UserInfos");
                 });
 
             modelBuilder.Entity("Models.DbEntities.Post.Blog", b =>
